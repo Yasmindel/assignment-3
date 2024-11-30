@@ -1,0 +1,46 @@
+def print_sequence(sequence):
+    # Print the sequence as space-separated integers
+    print(' '.join(map(str, sequence)))
+
+def LGIS(number_list):
+    # Find the Longest Increasing Subsequence (LIS) using Dynamic Programming
+    n = len(number_list)
+    dp = [1] * n  # dp[i] stores the length of LIS ending at index i
+    prev = [-1] * n  # prev[i] stores the previous index in the LIS ending at i
+
+    # Compute LIS
+    for i in range(n):
+        for j in range(i):
+            if number_list[j] < number_list[i] and dp[j] + 1 > dp[i]:
+                dp[i] = dp[j] + 1
+                prev[i] = j
+
+    # Find the index of the maximum length LIS
+    max_index = dp.index(max(dp))
+
+    # Reconstruct the LIS
+    lis = []
+    while max_index != -1:
+        lis.append(number_list[max_index])
+        max_index = prev[max_index]
+
+    lis.reverse()  # Reverse to get the correct order
+    return lis
+
+def process_lgis():
+    # Inline input
+    n = 5  # Length of the sequence (not used in calculations but included for clarity)
+    number_list = [5, 1, 4, 2, 3]  # The input sequence
+
+    # Find the Longest Increasing Subsequence (LIS)
+    increasing_sequence = LGIS(number_list)
+    print_sequence(increasing_sequence)
+    
+    # Find the Longest Decreasing Subsequence (LDS)
+    number_list.reverse()
+    decreasing_sequence = LGIS(number_list)
+    decreasing_sequence.reverse()
+    print_sequence(decreasing_sequence)
+
+# Run the function
+process_lgis()
