@@ -1,0 +1,26 @@
+from functools import reduce
+
+students = [
+    {"name": "Alice", "scores": [95, 92, 88, 100]},
+    {"name": "Bob", "scores": [78, 81, 85, 80]},
+    {"name": "Charlie", "scores": [99, 91, 94, 96]},
+    {"name": "Diana", "scores": [85, 87, 89, 83]}
+]
+
+# Step 1: Calculate the average score for each student
+students_with_averages = list(map(
+    lambda student: {
+        "name": student["name"],
+        "average_score": reduce(lambda a, b: a + b, student["scores"]) / len(student["scores"])
+    },
+    students
+))
+
+# Step 2: Filter out students with an average score <= 90
+top_students = list(filter(
+    lambda student: student["average_score"] > 90,
+    students_with_averages
+))
+
+# Print the result
+print(top_students)
