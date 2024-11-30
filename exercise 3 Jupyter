@@ -1,0 +1,35 @@
+from functools import reduce
+from collections import defaultdict
+
+# Input dataset
+employees = [
+    {"name": "John", "salary": 70000, "department": "Engineering"},
+    {"name": "Jane", "salary": 75000, "department": "Engineering"},
+    {"name": "Alice", "salary": 60000, "department": "HR"},
+    {"name": "Bob", "salary": 68000, "department": "HR"},
+    {"name": "Charlie", "salary": 90000, "department": "Marketing"},
+    {"name": "Diana", "salary": 50000, "department": "Marketing"}
+]
+
+# Step 1: Group employees by department
+department_groups = defaultdict(list)
+for employee in employees:
+    department_groups[employee["department"]].append(employee["salary"])
+
+# Step 2: Calculate the average salary for each department using map and reduce
+department_averages = list(map(
+    lambda item: {
+        "department": item[0],
+        "average_salary": reduce(lambda a, b: a + b, item[1]) / len(item[1])
+    },
+    department_groups.items()
+))
+
+# Step 3: Filter departments where the average salary is greater than 65,000
+filtered_departments = list(filter(
+    lambda department: department["average_salary"] > 65000,
+    department_averages
+))
+
+# Print the result
+print(filtered_departments)
