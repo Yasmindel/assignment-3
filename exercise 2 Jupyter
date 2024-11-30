@@ -1,0 +1,34 @@
+from functools import reduce
+from collections import defaultdict
+
+# Input dataset
+products = [
+    {"name": "Product A", "price": 60, "category": "Electronics"},
+    {"name": "Product B", "price": 40, "category": "Electronics"},
+    {"name": "Product C", "price": 70, "category": "Home"},
+    {"name": "Product D", "price": 30, "category": "Home"},
+    {"name": "Product E", "price": 90, "category": "Sports"}
+]
+
+# Step 1: Group products by category
+category_groups = defaultdict(list)
+for product in products:
+    category_groups[product["category"]].append(product["price"])
+
+# Step 2: Calculate the average price for each category using map and reduce
+category_averages = list(map(
+    lambda item: {
+        "category": item[0],
+        "average_price": reduce(lambda a, b: a + b, item[1]) / len(item[1])
+    },
+    category_groups.items()
+))
+
+# Step 3: Filter categories where the average price is greater than 50
+filtered_categories = list(filter(
+    lambda category: category["average_price"] > 50,
+    category_averages
+))
+
+# Print the result
+print(filtered_categories)
