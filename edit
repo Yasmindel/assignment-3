@@ -3,9 +3,13 @@ sys.path.append('../')
 from rosalind_utils import *
 
 def edit():
-    recs = read_fasta("rosalind_edit.txt")
-    seqa, seqb = recs[0][1], recs[1][1]
+    # Directly define the input data for this case
+    recs = [("Rosalind_39", "PLEASANTLY"), ("Rosalind_11", "MEANLY")]
+    
+    seqa, seqb = recs[0][1], recs[1][1]  # "PLEASANTLY", "MEANLY"
+    
+    # Calculate the edit distance between the two sequences
     return edit_distance(seqa, seqb)
 
-
-print edit()
+# Print the result of the edit distance
+print(edit())
