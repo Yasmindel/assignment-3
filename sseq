@@ -3,15 +3,17 @@ sys.path.append('../')
 import rosalind_utils
 
 def sseq():
-    recs = rosalind_utils.read_fasta("rosalind_sseq.txt")
+    # Define the dataset directly
+    recs = [("Rosalind_14", "ACGTACGTGACG"), ("Rosalind_18", "GTA")]
+
     s = recs[0][1]
     t = recs[1][1]
     last_index = 0
-    # assuming t is a substring of s (not necessarily contiguously)
+    # Find the subsequence t in s, character by character
     for tlet in t:
-        idx = s[last_index:].find(tlet)
-        print last_index+idx+1,
-        last_index += idx+1
-    print ""
+        idx = s[last_index:].find(tlet)  # Find character in the remaining part of s
+        print(last_index + idx + 1, end=" ")  # 1-based indexing
+        last_index += idx + 1  # Update the index to the next position after the found character
+    print("")
 
 sseq()
